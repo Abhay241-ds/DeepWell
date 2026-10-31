@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative mx-auto w-full max-w-7xl px-4 pb-10 pt-16 sm:px-6 sm:pb-12 sm:pt-24 lg:px-8 lg:pb-14 lg:pt-10">        {/* Background Accent */}
+      <section className="relative mx-auto w-full max-w-7xl px-4 pb-14 pt-4 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-4">        {/* Background Accent */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 top-10 h-72 w-72 rounded-full bg-[var(--accent)]/10 blur-3xl sm:h-96 sm:w-96"
@@ -51,11 +51,13 @@ export default function Home() {
             </h1>
 
             {/* Description */}
-            <p className="mt-8 max-w-xl text-base leading-8 text-[var(--muted)] sm:text-lg sm:leading-9">
-              We turn ambitious ideas into meaningful digital experiences.
-              From thoughtful design to powerful technology, we build
-              solutions that move your business forward.
-            </p>
+            <h3 className="mt-8 max-w-xl text-base leading-8 text-[var(--muted)] sm:text-lg sm:leading-9">
+              <p className="text-[var(--highlight)] text-2xl">We help your business grow online.</p>
+
+              We build websites, create mobile apps, manage social media, and use AI to make your work easier. Everything you need to grow your business, all in one place.
+              
+
+            </h3>
 
             {/* CTA Buttons */}
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -85,7 +87,7 @@ export default function Home() {
             </div>
 
             {/* Capabilities */}
-            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-[var(--border)] pt-7">
+            <div className="mt-6 hidden flex-wrap items-center gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 lg:flex">
               {capabilities.map(({ label, icon: Icon }) => (
                 <div key={label} className="flex items-center gap-2.5">
                   <Icon
@@ -242,15 +244,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="mt-24 hidden items-center justify-center gap-3 text-[var(--muted)] md:flex">
-          <span className="h-px w-10 bg-[var(--border)]" />
 
-          <span className="text-[10px] font-semibold uppercase tracking-[0.25em]">
-            Scroll to explore
-          </span>
-
-          <span className="h-px w-10 bg-[var(--border)]" />
-        </div>
       </section>
 
 

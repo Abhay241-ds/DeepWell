@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import type { ComponentProps } from "react";
 
 import ServiceCard from "./ServiceCard";
 import { services } from "./servicesData";
@@ -8,7 +9,7 @@ export default function Services() {
     return (
         <section
             id="services"
-            className="relative border-[var(--border)] bg-[var(--background)] px-4 pb-20 pt-4 transition-colors duration-300 sm:px-6 sm:pb-24 sm:pt-6 lg:px-8 lg:pb-28 lg:pt-8"    >
+            className="relative border-t border-(--border) bg-(--background) px-4 pb-20 pt-8 transition-colors duration-300 sm:px-6 sm:pb-24 sm:pt-6 lg:px-8 lg:pb-15 lg:pt-8"    >
             <div className="mx-auto max-w-7xl">
                 {/* Section Header */}
                 <div className="mb-14 grid gap-6 md:mb-16 md:grid-cols-2 md:items-end">
@@ -40,7 +41,11 @@ export default function Services() {
                 {/* Services Grid */}
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {services.map((service) => (
-                        <ServiceCard key={service.number} {...service} />
+                        <ServiceCard
+                            key={service.number}
+                            {...service}
+                            icon={service.icon as unknown as ComponentProps<typeof ServiceCard>["icon"]}
+                        />
                     ))}
                 </div>
 

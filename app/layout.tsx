@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
-import ThemeToggle from "@/components/layout/ThemeToggle";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
+config.autoAddCss = false;
 const manrope = Manrope({
 variable: "--font-manrope",
 subsets: ["latin"],
@@ -41,6 +44,7 @@ return (
     <ThemeProvider>
       <Navbar />
       {children}
+      <Footer />
     </ThemeProvider>
   </body>
 </html>
