@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+--background: #E8E9DF;
+--foreground: #2E3D28;
+}
+
+.dark {
+--background: #030407;
+--foreground: #F0F4FC;
+}
+
+* {
+  box-sizing: border-box;
+  }
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-manrope), sans-serif;
+}
