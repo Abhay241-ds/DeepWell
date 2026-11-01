@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-5 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-20 lg:pt-10">        {/* Background Accent */}
+      <section className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14">        {/* Background Accent */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 top-10 h-72 w-72 rounded-full bg-[var(--accent)]/10 blur-3xl sm:h-96 sm:w-96"
@@ -59,7 +59,7 @@ export default function Home() {
               <p className="text-[var(--highlight)] text-2xl">We help your business grow online.</p>
 
               We build websites, create mobile apps, manage social media, and use AI to make your work easier. Everything you need to grow your business, all in one place.
-              
+
 
             </h3>
 

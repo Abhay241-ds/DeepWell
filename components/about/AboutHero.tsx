@@ -27,7 +27,7 @@ const highlights = [
 
 export default function AboutHero() {
     return (
-        <section className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-5 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-10">
+        <section className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14">
             <div className="mx-auto max-w-7xl">
                 {/* Hero Header */}
                 <div className="mb-14 grid gap-7 md:mb-16 md:grid-cols-2 md:items-end">

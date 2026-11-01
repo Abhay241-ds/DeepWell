@@ -48,7 +48,7 @@ export default function FAQ() {
     return (
         <section
             id="faq"
-            className="relative isolate border-t border-[var(--border)] bg-[var(--background)] px-4 py-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:py-20 lg:px-8 lg:py-15"
+            className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14"
         >
             <div className="mx-auto max-w-7xl">
                 <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
