@@ -1,45 +1,49 @@
 @import "tailwindcss";
 
 :root {
---background: #E8E9DF;
---foreground: #2E3D28;
---card: #FFFFFF;
---muted: #596555;
---border: #D7D9CE;
---accent: #A98887;
---primary: #2E3D28;
---highlight: #A98887;
---footer-bg: #2E3D28;
+  --background: #E8E9DF;
+  --foreground: #2E3D28;
+  --card: #FFFFFF;
+  --muted: #596555;
+  --border: #D7D9CE;
+  --accent: #A98887;
+  --primary: #2E3D28;
+  --highlight: #A98887;
+  --footer-bg: #2E3D28;
   --footer-text: #E8E9DF;
+  --section-shadow: rgba(0, 0, 0, 0.12);
+
+
 }
 
 .dark {
---background: #030407;
---foreground: #F0F4FC;
---card: #0B0E17;
---muted: #8F9CAE;
---border: #1E2538;
---accent: #1558C9;
---primary: #1558C9;
---highlight: #D4FF24;
---footer-bg: #1558C9;
+  --background: #030407;
+  --foreground: #F0F4FC;
+  --card: #0B0E17;
+  --muted: #8F9CAE;
+  --border: #1E2538;
+  --accent: #1558C9;
+  --primary: #1558C9;
+  --highlight: #D4FF24;
+  --footer-bg: #0c2144;
   --footer-text: #F0F4FC;
+  --section-shadow: rgba(21, 88, 201, 0.30);
 }
 
 
 * {
   box-sizing: border-box;
-  }
+}
 
 html {
-scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-margin: 0;
-background: var(--background);
-color: var(--foreground);
-font-family: var(--font-inter), sans-serif;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
 }
 
 h1,
@@ -48,28 +52,70 @@ h3,
 h4,
 h5,
 h6 {
-font-family: var(--font-manrope), sans-serif;
+  font-family: var(--font-manrope), sans-serif;
 }
+
 /* Smooth theme transition */
-html,
+/* Smooth theme transition */
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Animate only theme-related colors */
 body,
-body *,
-body *::before,
-body *::after {
-transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-transition-duration: 700ms;
-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+header,
+section,
+footer,
+nav,
+article,
+aside,
+button,
+a,
+div {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+  body,
+  header,
+  section,
+  footer,
+  nav,
+  article,
+  aside,
+  button,
+  a,
+  div {
+    transition-duration: 0ms;
+  }
 }
 
 /* Respect accessibility preferences */
 @media (prefers-reduced-motion: reduce) {
-html,
-body,
-body *,
-body *::before,
-body *::after {
-transition-duration: 0.01ms !important;
-}
+
+  html,
+  body,
+  body *,
+  body *::before,
+  body *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
 
+/* Light theme: soft grey shadow */
+.section-separator {
+  box-shadow: 0 -10px 20px -15px rgba(0, 0, 0, 0.25);
+}
 
+/* Dark theme: blue shadow */
+.dark .section-separator {
+  box-shadow: 0 -10px 25px -12px rgba(21, 88, 201, 0.65);
+}

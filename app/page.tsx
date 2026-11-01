@@ -9,6 +9,10 @@ import {
   CircleDot,
 } from "lucide-react";
 import Services from "@/components/services/Services";
+import Process from "@/components/home/Process";
+import BottomCTA from "@/components/layout/BottomCTA";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+import FAQ from "@/components/home/FAQ";
 const capabilities = [
   { label: "Digital experiences", icon: Layers3 },
   { label: "Modern development", icon: Code2 },
@@ -19,7 +23,7 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative mx-auto w-full max-w-7xl px-4 pb-14 pt-4 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-4">        {/* Background Accent */}
+      <section className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-5 sm:px-6 sm:pb-20 sm:pt-14 lg:px-8 lg:pb-20 lg:pt-10">        {/* Background Accent */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 top-10 h-72 w-72 rounded-full bg-[var(--accent)]/10 blur-3xl sm:h-96 sm:w-96"
@@ -249,6 +253,10 @@ export default function Home() {
 
 
       <Services />
+      <Process />
+      <WhyChooseUs />
+      <FAQ />
+      <BottomCTA />
 
 
     </main>
