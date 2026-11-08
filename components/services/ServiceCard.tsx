@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 interface ServiceCardProps {
   number: string;
+  slug: string;
   title: string;
   description: string;
   icon: IconDefinition;
@@ -13,6 +14,7 @@ interface ServiceCardProps {
 
 export default function ServiceCard({
   number,
+  slug,
   title,
   description,
   icon,
@@ -20,8 +22,8 @@ export default function ServiceCard({
 }: ServiceCardProps) {
   return (
     <Link
-      href="/contact"
-      className="group relative flex  flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--highlight)] hover:shadow-xl hover:shadow-black/5 sm:p-5"
+      href={`/services/${slug}`}
+      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--highlight)] hover:shadow-xl hover:shadow-black/5 sm:p-5"
     >
       {/* Card Header */}
       <div className="mb-3 flex items-start justify-between">
@@ -31,7 +33,6 @@ export default function ServiceCard({
             className="text-[20px] text-[var(--foreground)] transition-colors duration-300 group-hover:text-[var(--background)]"
           />
         </div>
-
 
         <span className="text-xs font-semibold tracking-widest text-[var(--muted)]/70">
           {number}
@@ -51,8 +52,10 @@ export default function ServiceCard({
         <p className="text-sm leading-7 text-[var(--muted)]">
           {description}
         </p>
+
         <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[var(--highlight)] underline decoration-[var(--highlight)] decoration-2 underline-offset-4 transition-colors duration-300 group-hover:text-[var(--foreground)]">
           Tap to Explore
+
           <span className="inline-flex items-center transition-transform duration-300 group-hover:translate-x-1">
             <ArrowRight size={16} />
           </span>
@@ -60,9 +63,6 @@ export default function ServiceCard({
       </div>
 
       {/* Card Footer */}
-
     </Link>
-
-
   );
 }
