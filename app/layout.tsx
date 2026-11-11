@@ -4,11 +4,14 @@ import ThemeProvider from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
+
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-
 config.autoAddCss = false;
+
+const SITE_URL = "https://deepwelldigital.vercel.app";
+
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
@@ -21,8 +24,9 @@ const inter = Inter({
   display: "swap",
 });
 
+// Global SEO Metadata
 export const metadata: Metadata = {
-  metadataBase: new URL("https://deepwelldigital.vercel.app"),
+  metadataBase: new URL(SITE_URL),
 
   title: {
     default: "DeepWell Digital | Digital Agency",
@@ -64,7 +68,7 @@ export const metadata: Metadata = {
     title: "DeepWell Digital | Digital Agency",
     description:
       "We build meaningful digital experiences through technology, creativity, and strategy.",
-    url: "https://deepwelldigital.vercel.app",
+    url: SITE_URL,
     images: ["/og-image.png"],
   },
 
@@ -81,6 +85,32 @@ export const metadata: Metadata = {
   },
 };
 
+// Organization Structured Data
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+
+  name: "DeepWell Digital",
+
+  url: SITE_URL,
+
+  description:
+    "DeepWell Digital is a digital agency providing web development, app development, social media management, AI automation, digital branding, and marketing solutions.",
+
+  slogan: "Dig Deeper. Build Better.",
+
+  knowsAbout: [
+    "Web Development",
+    "App Development",
+    "Social Media Management",
+    "AI Automation",
+    "Digital Branding",
+    "Marketing Strategies",
+  ],
+};
+
+// Root Layout
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -93,11 +123,24 @@ export default function RootLayout({
       className={`${manrope.variable} ${inter.variable}`}
     >
       <body className="min-h-screen flex flex-col antialiased">
+
+        {/* Organization Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(
+              /</g,
+              "\\u003c"
+            ),
+          }}
+        />
+
         <ThemeProvider>
           <Navbar />
           {children}
           <Footer />
         </ThemeProvider>
+
       </body>
     </html>
   );
