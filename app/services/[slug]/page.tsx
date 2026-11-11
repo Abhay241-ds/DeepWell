@@ -16,6 +16,7 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 import { services } from "@/components/services/servicesData";
 
+const SITE_URL = "https://deepwelldigital.vercel.app";
 const WHATSAPP_NUMBER = "919027802766";
 
 type Props = {
@@ -24,23 +25,30 @@ type Props = {
 
 // Normalize slug before matching
 function normalizeSlug(value: string) {
-    return decodeURIComponent(value)
+    let decodedValue = value;
+
+    try {
+        decodedValue = decodeURIComponent(value);
+    } catch {
+        // Keep the original value if decoding fails
+    }
+
+    return decodedValue
         .trim()
         .toLowerCase()
         .replace(/\/+$/, "");
 }
 
-// Find service
+// Find service using slug
 function findService(slug: string) {
     const normalizedSlug = normalizeSlug(slug);
 
     return services.find(
-        (item) =>
-            normalizeSlug(item.slug) === normalizedSlug
+        (item) => normalizeSlug(item.slug) === normalizedSlug
     );
 }
 
-// WhatsApp URL
+// Generate WhatsApp enquiry URL
 function getWhatsAppLink(
     serviceName: string,
     optionName?: string,
@@ -62,188 +70,106 @@ Thank you.
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-// Generate static routes
+// Generate static service routes
 export function generateStaticParams() {
     return services.map((service) => ({
         slug: service.slug,
     }));
 }
 
-// SEO Metadata
-// Dynamic SEO Metadata
+// Dynamic SEO metadata
 export async function generateMetadata({
-  params,
+    params,
 }: Props): Promise<Metadata> {
-  const { slug } = await params;
+    const { slug } = await params;
 
-  const service = findService(slug);
+    const service = findService(slug);
 
-  // SEO for invalid service URLs
-  if (!service) {
+    if (!service) {
+        return {
+            title: "Service Not Found | DeepWell Digital",
+            robots: {
+                index: false,
+                follow: false,
+            },
+        };
+    }
+
+    const pageTitle = `${service.title} Services`;
+
+    const pageDescription =
+        service.description ||
+        service.intro ||
+        `Explore ${service.title} services by DeepWell Digital. Discover our solutions, pricing and packages for your business.`;
+
+    const canonicalUrl = `${SITE_URL}/services/${service.slug}`;
+
     return {
-      title: "Service Not Found | DeepWell Digital",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
-  }
+        title: pageTitle,
 
-  const pageTitle = `${service.title} Services`;
-  const pageDescription =
-    service.description ||
-    service.intro ||
-    `Explore ${service.title} services by DeepWell Digital. Discover our solutions, pricing, and packages for your business.`;
+        description: pageDescription,
 
-  const canonicalUrl = `https://deepwelldigital.vercel.app/services/${service.slug}`;
+        keywords: [
+            service.title,
+            `${service.title} services`,
+            `${service.title} agency`,
+            `${service.title} solutions`,
+            "DeepWell Digital",
+            "Digital Agency",
+            "Business Growth",
+        ],
 
-  return {
-    title: pageTitle,
-
-    description: pageDescription,
-
-    keywords: [
-      service.title,
-      `${service.title} services`,
-      `${service.title} agency`,
-      `${service.title} solutions`,
-      "DeepWell Digital",
-      "Digital Agency",
-      "Business Growth",
-    ],
-
-    alternates: {
-      canonical: `/services/${service.slug}`,
-    },
-
-    openGraph: {
-      title: `${pageTitle} | DeepWell Digital`,
-      description: pageDescription,
-      url: canonicalUrl,
-      siteName: "DeepWell Digital",
-      type: "website",
-      locale: "en_IN",
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: `${service.title} - DeepWell Digital`,
+        alternates: {
+            canonical: `/services/${service.slug}`,
         },
-      ],
-    },
 
-    twitter: {
-      card: "summary_large_image",
-      title: `${pageTitle} | DeepWell Digital`,
-      description: pageDescription,
-      images: ["/og-image.png"],
-    },
+        openGraph: {
+            title: `${pageTitle} | DeepWell Digital`,
+            description: pageDescription,
+            url: canonicalUrl,
+            siteName: "DeepWell Digital",
+            type: "website",
+            locale: "en_IN",
 
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
-    },
-  };
+            images: [
+                {
+                    url: "/og-image.png",
+                    width: 1200,
+                    height: 630,
+                    alt: `${service.title} - DeepWell Digital`,
+                },
+            ],
+        },
+
+        twitter: {
+            card: "summary_large_image",
+            title: `${pageTitle} | DeepWell Digital`,
+            description: pageDescription,
+            images: ["/og-image.png"],
+        },
+
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+            },
+        },
+    };
 }
 
+// Service Detail Page
 export default async function ServiceDetailPage({
     params,
 }: Props) {
     const { slug } = await params;
 
-    // DEBUG INFORMATION
-    console.log("========== SERVICE DEBUG ==========");
-    console.log("Requested slug:", slug);
-
-    console.log(
-        "Available services:",
-        services.map((item) => ({
-            title: item.title,
-            slug: item.slug,
-        }))
-    );
-
     const service = findService(slug);
 
-    console.log(
-        "Matched service:",
-        service?.title ?? "NOT FOUND"
-    );
-
-    console.log("===================================");
-
-    // Temporary diagnostic page instead of 404
+    // Show 404 for invalid service URLs
     if (!service) {
-        return (
-            <main className="flex min-h-screen items-center justify-center bg-(--background) px-5 py-20">
-                <div className="w-full max-w-2xl rounded-3xl border border-(--border) bg-(--card) p-8 sm:p-10">
-
-                    <span className="text-xs font-bold uppercase tracking-widest text-(--highlight)">
-                        Service Debug
-                    </span>
-
-                    <h1 className="mt-4 text-3xl font-extrabold text-(--foreground)">
-                        Service Not Found
-                    </h1>
-
-                    <p className="mt-4 text-sm leading-7 text-(--muted)">
-                        The requested service could not be matched
-                        with the available services.
-                    </p>
-
-                    <div className="mt-7 rounded-xl border border-(--border) bg-(--background) p-5">
-
-                        <p className="text-xs font-bold uppercase tracking-wider text-(--muted)">
-                            Requested Slug
-                        </p>
-
-                        <p className="mt-2 break-all font-mono text-sm text-(--highlight)">
-                            {slug}
-                        </p>
-
-                    </div>
-
-                    <div className="mt-6">
-
-                        <p className="text-xs font-bold uppercase tracking-wider text-(--muted)">
-                            Available Slugs
-                        </p>
-
-                        <div className="mt-3 space-y-2">
-
-                            {services.map((item) => (
-                                <Link
-                                    key={item.slug}
-                                    href={`/services/${item.slug}`}
-                                    className="block rounded-lg border border-(--border) bg-(--background) px-4 py-3 text-sm font-medium text-(--foreground) transition-colors hover:border-(--highlight) hover:text-(--highlight)"
-                                >
-                                    {item.title}
-                                    <span className="ml-2 text-xs text-(--muted)">
-                                        ({item.slug})
-                                    </span>
-                                </Link>
-                            ))}
-
-                        </div>
-
-                    </div>
-
-                    <Link
-                        href="/services"
-                        className="mt-8 inline-flex items-center gap-3 rounded-full bg-(--highlight) px-6 py-3 text-sm font-bold text-(--background)"
-                    >
-                        <FontAwesomeIcon icon={faArrowRight} className="rotate-180" />
-                        Back to Services
-                    </Link>
-
-                </div>
-            </main>
-        );
+        notFound();
     }
 
     const whatsappLink = getWhatsAppLink(service.title);
@@ -259,6 +185,8 @@ export default async function ServiceDetailPage({
 
                     <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
 
+                        {/* HERO CONTENT */}
+
                         <div>
 
                             <Link
@@ -269,8 +197,11 @@ export default async function ServiceDetailPage({
                                     icon={faArrowRight}
                                     className="rotate-180"
                                 />
+
                                 All Services
-                            </Link><br />
+                            </Link>
+
+                            <br />
 
                             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--card) px-4 py-2">
 
@@ -299,7 +230,9 @@ export default async function ServiceDetailPage({
                                     className="inline-flex items-center gap-3 rounded-full bg-(--highlight) px-7 py-4 text-sm font-bold text-(--background) transition-all duration-300 hover:-translate-y-1 hover:opacity-90"
                                 >
                                     <FontAwesomeIcon icon={faWhatsapp} />
+
                                     Get a Free Quote
+
                                     <FontAwesomeIcon icon={faArrowRight} />
                                 </a>
 
@@ -354,6 +287,7 @@ export default async function ServiceDetailPage({
 
             </section>
 
+
             {/* SERVICE TYPES */}
 
             <section className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14">
@@ -363,12 +297,14 @@ export default async function ServiceDetailPage({
                     <div className="mb-12 max-w-2xl">
 
                         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-(--border) bg-(--card) px-4 py-2">
+
                             <span className="h-2 w-2 rounded-full bg-(--highlight)" />
+
                             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-(--muted) sm:text-xs">
                                 What we provide
                             </span>
-                        </div>
 
+                        </div>
 
                         <h2 className="mt-4 text-3xl font-bold tracking-tight text-(--foreground) sm:text-4xl">
                             Explore our {service.title.toLowerCase()} services.
@@ -421,12 +357,14 @@ export default async function ServiceDetailPage({
                                             key={feature}
                                             className="flex items-start gap-3 text-sm text-(--muted)"
                                         >
+
                                             <FontAwesomeIcon
                                                 icon={faCheck}
                                                 className="mt-1 text-xs text-(--highlight)"
                                             />
 
                                             <span>{feature}</span>
+
                                         </div>
 
                                     ))}
@@ -444,6 +382,7 @@ export default async function ServiceDetailPage({
                                     className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-(--highlight) transition-colors hover:text-(--foreground)"
                                 >
                                     Enquire Now
+
                                     <FontAwesomeIcon icon={faArrowRight} />
                                 </a>
 
@@ -456,6 +395,7 @@ export default async function ServiceDetailPage({
                 </div>
 
             </section>
+
 
             {/* PRICING PACKAGES */}
 
@@ -499,16 +439,19 @@ export default async function ServiceDetailPage({
 
                                 <article
                                     key={pkg.name}
-                                    className={`relative flex flex-col rounded-2xl border bg-(--card) p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isPopular
-                                        ? "border-(--highlight) shadow-lg"
-                                        : "border-(--border)"
-                                        }`}
+                                    className={`relative flex flex-col rounded-2xl border bg-(--card) p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                                        isPopular
+                                            ? "border-(--highlight) shadow-lg"
+                                            : "border-(--border)"
+                                    }`}
                                 >
 
                                     {isPopular && (
+
                                         <span className="absolute -top-3 left-7 rounded-full bg-(--highlight) px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-(--background)">
                                             Most Popular
                                         </span>
+
                                     )}
 
                                     <h3 className="mt-2 text-xl font-bold text-(--foreground)">
@@ -539,11 +482,14 @@ export default async function ServiceDetailPage({
                                                 key={feature}
                                                 className="flex items-start gap-3 text-sm text-(--muted)"
                                             >
+
                                                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-(--highlight)/10 text-(--highlight)">
+
                                                     <FontAwesomeIcon
                                                         icon={faCheck}
                                                         className="text-[10px]"
                                                     />
+
                                                 </span>
 
                                                 {feature}
@@ -558,18 +504,21 @@ export default async function ServiceDetailPage({
                                         href={packageLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`mt-9 flex min-h-12 items-center justify-center gap-3 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 hover:-translate-y-1 ${isPopular
-                                            ? "bg-(--highlight) text-(--background) hover:opacity-90"
-                                            : "border border-(--border) text-(--foreground) hover:border-(--highlight)"
-                                            }`}
+                                        className={`mt-9 flex min-h-12 items-center justify-center gap-3 rounded-full px-6 py-3 text-sm font-bold transition-all duration-300 hover:-translate-y-1 ${
+                                            isPopular
+                                                ? "bg-(--highlight) text-(--background) hover:opacity-90"
+                                                : "border border-(--border) text-(--foreground) hover:border-(--highlight)"
+                                        }`}
                                     >
                                         Choose Package
+
                                         <FontAwesomeIcon icon={faArrowRight} />
                                     </a>
 
                                 </article>
 
                             );
+
                         })}
 
                     </div>
@@ -581,6 +530,7 @@ export default async function ServiceDetailPage({
                 </div>
 
             </section>
+
 
             {/* WHY CHOOSE US */}
 
@@ -606,17 +556,20 @@ export default async function ServiceDetailPage({
                             {
                                 icon: faShieldHalved,
                                 title: "Quality Work",
-                                description: "We focus on useful solutions, thoughtful design and attention to detail.",
+                                description:
+                                    "We focus on useful solutions, thoughtful design and attention to detail.",
                             },
                             {
                                 icon: faClock,
                                 title: "Clear Process",
-                                description: "We keep you informed about project progress and important milestones.",
+                                description:
+                                    "We keep you informed about project progress and important milestones.",
                             },
                             {
                                 icon: faHeadset,
                                 title: "Ongoing Support",
-                                description: "We help you understand your solution and provide support as agreed.",
+                                description:
+                                    "We help you understand your solution and provide support as agreed.",
                             },
                         ].map((item) => (
 
@@ -643,6 +596,7 @@ export default async function ServiceDetailPage({
                 </div>
 
             </section>
+
 
             {/* FINAL CTA */}
 
@@ -671,6 +625,7 @@ export default async function ServiceDetailPage({
                             className="inline-flex items-center gap-3 rounded-full bg-(--highlight) px-7 py-4 text-sm font-bold text-(--background) transition-all duration-300 hover:-translate-y-1 hover:opacity-90"
                         >
                             <FontAwesomeIcon icon={faWhatsapp} />
+
                             Let's Talk
                         </a>
 
@@ -679,6 +634,7 @@ export default async function ServiceDetailPage({
                             className="inline-flex items-center gap-3 rounded-full border border-(--border) px-7 py-4 text-sm font-bold text-(--foreground) transition-all duration-300 hover:border-(--highlight)"
                         >
                             Contact Us
+
                             <FontAwesomeIcon icon={faArrowRight} />
                         </Link>
 

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
+
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+
 import "./globals.css";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -11,7 +13,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 const SITE_URL = "https://deepwelldigital.vercel.app";
-
 const SITE_NAME = "DeepWell Digital";
 
 const SITE_DESCRIPTION =
@@ -19,6 +20,7 @@ const SITE_DESCRIPTION =
 
 const OG_IMAGE = "/og-image.png";
 
+// Fonts
 const manrope = Manrope({
     variable: "--font-manrope",
     subsets: ["latin"],
@@ -65,9 +67,18 @@ export const metadata: Metadata = {
 
     category: "Technology",
 
+    referrer: "origin-when-cross-origin",
+
+    formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+    },
+
     robots: {
         index: true,
         follow: true,
+
         googleBot: {
             index: true,
             follow: true,
@@ -81,9 +92,12 @@ export const metadata: Metadata = {
         type: "website",
         locale: "en_IN",
         siteName: SITE_NAME,
+
         title: "DeepWell Digital | Digital Agency",
         description: SITE_DESCRIPTION,
+
         url: SITE_URL,
+
         images: [
             {
                 url: OG_IMAGE,
@@ -107,7 +121,7 @@ export const metadata: Metadata = {
     },
 };
 
-// Structured Data: Organization
+// Organization Structured Data
 const organizationSchema = {
     "@type": "Organization",
     "@id": `${SITE_URL}/#organization`,
@@ -129,7 +143,7 @@ const organizationSchema = {
     ],
 };
 
-// Structured Data: Website
+// Website Structured Data
 const websiteSchema = {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
@@ -149,6 +163,7 @@ const websiteSchema = {
 // Combined Structured Data
 const structuredData = {
     "@context": "https://schema.org",
+
     "@graph": [
         organizationSchema,
         websiteSchema,
@@ -169,7 +184,7 @@ export default function RootLayout({
         >
             <body className="flex min-h-screen flex-col antialiased">
 
-                {/* Structured Data for Google */}
+                {/* Structured Data */}
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
@@ -183,9 +198,10 @@ export default function RootLayout({
                 <ThemeProvider>
                     <Navbar />
 
-                    <main className="flex-1">
+                    {/* Page Content */}
+                    <div className="flex-1">
                         {children}
-                    </main>
+                    </div>
 
                     <Footer />
                 </ThemeProvider>
