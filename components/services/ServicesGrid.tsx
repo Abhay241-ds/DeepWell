@@ -39,72 +39,77 @@ export default function ServicesGrid() {
         </div>
 
         {/* Service Cards */}
+
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <article
+            <Link
               key={service.slug}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) p-5 transition-all duration-300 hover:-translate-y-1 hover:border-(--highlight) hover:shadow-lg sm:p-6"
+              href={`/services/${service.slug}`}
+              aria-label={`View ${service.title} details and pricing`}
+              className="group relative block"
             >
-              {/* Number and Tag */}
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-xs font-bold tracking-widest text-(--muted)">
-                  {service.number}
-                </span>
+              <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-(--border) bg-(--card) p-5 transition-all duration-300 hover:-translate-y-1 hover:border-(--highlight) hover:shadow-lg sm:p-6">
 
-                <span className="rounded-full border border-(--border) px-3 py-1 text-[9px] font-bold tracking-[0.12em] text-(--muted)">
-                  {service.tag}
-                </span>
-              </div>
+                {/* Number and Tag */}
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs font-bold tracking-widest text-(--muted)">
+                    {service.number}
+                  </span>
 
-              {/* Icon */}
-              <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-xl border border-(--border) bg-(--background) text-lg text-(--highlight) transition-all duration-300 group-hover:border-(--highlight) group-hover:bg-(--highlight)/10">
-                <FontAwesomeIcon icon={service.icon} />
-              </div>
+                  <span className="rounded-full border border-(--border) px-3 py-1 text-[9px] font-bold tracking-[0.12em] text-(--muted)">
+                    {service.tag}
+                  </span>
+                </div>
 
-              {/* Content */}
-              <div className="mt-5 flex-1">
-                <h3 className="text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
-                  {service.title}
-                </h3>
+                {/* Icon */}
+                <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-xl border border-(--border) bg-(--background) text-lg text-(--highlight) transition-all duration-300 group-hover:border-(--highlight) group-hover:bg-(--highlight)/10">
+                  <FontAwesomeIcon icon={service.icon} />
+                </div>
 
-                <p className="mt-2 text-sm leading-7 text-(--muted)">
-                  {service.description}
-                </p>
-              </div>
+                {/* Content */}
+                <div className="mt-5 flex-1">
+                  <h3 className="text-xl font-bold tracking-tight text-(--foreground) sm:text-2xl">
+                    {service.title}
+                  </h3>
 
-              {/* Pricing */}
-              <div className="mt-6 border-t border-(--border) pt-5">
-                <p className="text-xs font-medium text-(--muted)">
-                  Starting at
-                </p>
+                  <p className="mt-2 text-sm leading-7 text-(--muted)">
+                    {service.description}
+                  </p>
+                </div>
 
-                <p className="mt-1 text-2xl font-extrabold tracking-tight text-(--foreground)">
-                  {service.startingPrice}
-                </p>
+                {/* Pricing */}
+                <div className="mt-6 border-t border-(--border) pt-5">
+                  <p className="text-xs font-medium text-(--muted)">
+                    Starting at
+                  </p>
 
-                <p className="mt-1 text-xs text-(--muted)">
-                  Final price depends on your requirements.
-                </p>
-              </div>
+                  <p className="mt-1 text-2xl font-extrabold tracking-tight text-(--foreground)">
+                    {service.startingPrice}
+                  </p>
 
-              {/* View Details */}
-              <Link
-                href={`/services/${service.slug}`}
-                aria-label={`View ${service.title} details and pricing`}
-                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-(--highlight) px-5 py-3 text-sm font-bold text-(--background) transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90"
-              >
-                View Details
+                  <p className="mt-1 text-xs text-(--muted)">
+                    Final price depends on your requirements.
+                  </p>
+                </div>
 
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
+                {/* View Details */}
+                <div className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-(--highlight) px-5 py-3 text-sm font-bold text-(--background) transition-all duration-300 group-hover:-translate-y-0.5 group-hover:opacity-90">
+                  View Details
 
-              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-(--highlight) transition-all duration-500 group-hover:w-full" />
-            </article>
+                  <FontAwesomeIcon
+                    icon={faArrowRight}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </div>
+
+                {/* Bottom Hover Line */}
+                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-(--highlight) transition-all duration-500 group-hover:w-full" />
+
+              </article>
+            </Link>
           ))}
         </div>
+
 
         <p className="mt-8 text-center text-xs leading-6 text-(--muted)">
           All prices are starting estimates. Contact us for a
