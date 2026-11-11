@@ -12,136 +12,185 @@ config.autoAddCss = false;
 
 const SITE_URL = "https://deepwelldigital.vercel.app";
 
+const SITE_NAME = "DeepWell Digital";
+
+const SITE_DESCRIPTION =
+    "DeepWell Digital helps businesses grow with professional web development, app development, AI automation, digital branding, social media management, and marketing solutions.";
+
+const OG_IMAGE = "/og-image.png";
+
 const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
+    variable: "--font-manrope",
+    subsets: ["latin"],
+    display: "swap",
 });
 
 const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
+    variable: "--font-inter",
+    subsets: ["latin"],
+    display: "swap",
 });
 
 // Global SEO Metadata
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(SITE_URL),
 
-  title: {
-    default: "DeepWell Digital | Digital Agency",
-    template: "%s | DeepWell Digital",
-  },
+    applicationName: SITE_NAME,
 
-  description:
-    "DeepWell Digital helps businesses grow with professional web development, app development, AI automation, digital branding, and marketing solutions.",
-
-  keywords: [
-    "DeepWell Digital",
-    "Digital Agency",
-    "Web Development Agency",
-    "App Development",
-    "Next.js Development",
-    "AI Automation",
-    "Social Media Management",
-    "Digital Branding",
-    "Digital Marketing Agency",
-  ],
-
-  authors: [{ name: "DeepWell Digital" }],
-  creator: "DeepWell Digital",
-  publisher: "DeepWell Digital",
-
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
+    title: {
+        default: "DeepWell Digital | Digital Agency",
+        template: "%s | DeepWell Digital",
     },
-  },
 
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    siteName: "DeepWell Digital",
-    title: "DeepWell Digital | Digital Agency",
-    description:
-      "We build meaningful digital experiences through technology, creativity, and strategy.",
-    url: SITE_URL,
-    images: ["/og-image.png"],
-  },
+    description: SITE_DESCRIPTION,
 
-  twitter: {
-    card: "summary_large_image",
-    title: "DeepWell Digital | Digital Agency",
-    description:
-      "Building meaningful digital experiences through technology, creativity, and strategy.",
-    images: ["/og-image.png"],
-  },
+    keywords: [
+        "DeepWell Digital",
+        "DeepWell Digital Agency",
+        "Digital Agency",
+        "Web Development Agency",
+        "Website Development",
+        "Next.js Development",
+        "App Development",
+        "AI Automation",
+        "Social Media Management",
+        "Digital Branding",
+        "Digital Marketing Agency",
+        "Marketing Strategies",
+    ],
 
-  icons: {
-    icon: "/favicon.ico",
-  },
+    authors: [{ name: SITE_NAME }],
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
+
+    category: "Technology",
+
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+        },
+    },
+
+    openGraph: {
+        type: "website",
+        locale: "en_IN",
+        siteName: SITE_NAME,
+        title: "DeepWell Digital | Digital Agency",
+        description: SITE_DESCRIPTION,
+        url: SITE_URL,
+        images: [
+            {
+                url: OG_IMAGE,
+                width: 1200,
+                height: 630,
+                alt: "DeepWell Digital - Digital Agency",
+            },
+        ],
+    },
+
+    twitter: {
+        card: "summary_large_image",
+        title: "DeepWell Digital | Digital Agency",
+        description: SITE_DESCRIPTION,
+        images: [OG_IMAGE],
+    },
+
+    icons: {
+        icon: "/favicon.ico",
+        shortcut: "/favicon.ico",
+    },
 };
 
-// Organization Structured Data
+// Structured Data: Organization
 const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${SITE_URL}/#organization`,
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
 
-  name: "DeepWell Digital",
+    name: SITE_NAME,
+    url: SITE_URL,
 
-  url: SITE_URL,
+    description: SITE_DESCRIPTION,
 
-  description:
-    "DeepWell Digital is a digital agency providing web development, app development, social media management, AI automation, digital branding, and marketing solutions.",
+    slogan: "Dig Deeper. Build Better.",
 
-  slogan: "Dig Deeper. Build Better.",
+    knowsAbout: [
+        "Web Development",
+        "App Development",
+        "Social Media Management",
+        "AI Automation",
+        "Digital Branding",
+        "Marketing Strategies",
+    ],
+};
 
-  knowsAbout: [
-    "Web Development",
-    "App Development",
-    "Social Media Management",
-    "AI Automation",
-    "Digital Branding",
-    "Marketing Strategies",
-  ],
+// Structured Data: Website
+const websiteSchema = {
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+
+    url: SITE_URL,
+    name: SITE_NAME,
+
+    description: SITE_DESCRIPTION,
+
+    publisher: {
+        "@id": `${SITE_URL}/#organization`,
+    },
+
+    inLanguage: "en-IN",
+};
+
+// Combined Structured Data
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+        organizationSchema,
+        websiteSchema,
+    ],
 };
 
 // Root Layout
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${manrope.variable} ${inter.variable}`}
-    >
-      <body className="min-h-screen flex flex-col antialiased">
+    return (
+        <html
+            lang="en-IN"
+            suppressHydrationWarning
+            className={`${manrope.variable} ${inter.variable}`}
+        >
+            <body className="flex min-h-screen flex-col antialiased">
 
-        {/* Organization Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema).replace(
-              /</g,
-              "\\u003c"
-            ),
-          }}
-        />
+                {/* Structured Data for Google */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(structuredData).replace(
+                            /</g,
+                            "\\u003c"
+                        ),
+                    }}
+                />
 
-        <ThemeProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </ThemeProvider>
+                <ThemeProvider>
+                    <Navbar />
 
-      </body>
-    </html>
-  );
+                    <main className="flex-1">
+                        {children}
+                    </main>
+
+                    <Footer />
+                </ThemeProvider>
+
+            </body>
+        </html>
+    );
 }
