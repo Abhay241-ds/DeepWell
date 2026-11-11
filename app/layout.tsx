@@ -22,6 +22,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+
+   verification: {
+    google: "google-site-verification: google1e1b18bd9b931d82.html",
+  },
   metadataBase: new URL("https://deepwelldigital.vercel.app"),
 
   title: {
