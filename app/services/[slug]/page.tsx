@@ -70,23 +70,85 @@ export function generateStaticParams() {
 }
 
 // SEO Metadata
+// Dynamic SEO Metadata
 export async function generateMetadata({
-    params,
+  params,
 }: Props): Promise<Metadata> {
-    const { slug } = await params;
+  const { slug } = await params;
 
-    const service = findService(slug);
+  const service = findService(slug);
 
-    if (!service) {
-        return {
-            title: "Service Not Found | DeepWell Digital",
-        };
-    }
-
+  // SEO for invalid service URLs
+  if (!service) {
     return {
-        title: `${service.title} | DeepWell Digital`,
-        description: service.description,
+      title: "Service Not Found | DeepWell Digital",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
+  }
+
+  const pageTitle = `${service.title} Services`;
+  const pageDescription =
+    service.description ||
+    service.intro ||
+    `Explore ${service.title} services by DeepWell Digital. Discover our solutions, pricing, and packages for your business.`;
+
+  const canonicalUrl = `https://deepwelldigital.vercel.app/services/${service.slug}`;
+
+  return {
+    title: pageTitle,
+
+    description: pageDescription,
+
+    keywords: [
+      service.title,
+      `${service.title} services`,
+      `${service.title} agency`,
+      `${service.title} solutions`,
+      "DeepWell Digital",
+      "Digital Agency",
+      "Business Growth",
+    ],
+
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
+
+    openGraph: {
+      title: `${pageTitle} | DeepWell Digital`,
+      description: pageDescription,
+      url: canonicalUrl,
+      siteName: "DeepWell Digital",
+      type: "website",
+      locale: "en_IN",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${service.title} - DeepWell Digital`,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: `${pageTitle} | DeepWell Digital`,
+      description: pageDescription,
+      images: ["/og-image.png"],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+  };
 }
 
 export default async function ServiceDetailPage({

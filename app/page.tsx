@@ -9,6 +9,7 @@ import {
   CircleDot,
 } from "lucide-react";
 import Services from "@/components/services/Services";
+import type { Metadata } from "next";
 import Process from "@/components/home/Process";
 import BottomCTA from "@/components/layout/BottomCTA";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
@@ -18,6 +19,55 @@ const capabilities = [
   { label: "Modern development", icon: Code2 },
   { label: "Intelligent solutions", icon: Sparkles },
 ];
+export const metadata: Metadata = {
+  title: "Digital Agency for Web, Apps & AI Solutions",
+  
+  description:
+    "DeepWell Digital helps businesses grow online with professional website development, mobile apps, social media management, AI automation, digital branding, and marketing solutions.",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  keywords: [
+    "DeepWell Digital",
+    "Digital Agency",
+    "Web Development Agency",
+    "Website Development Services",
+    "Mobile App Development",
+    "AI Automation Services",
+    "Social Media Management",
+    "Digital Branding",
+    "Digital Marketing Agency",
+    "Business Growth Solutions",
+  ],
+
+  openGraph: {
+    title: "DeepWell Digital | Dig Deeper. Build Better.",
+    description:
+      "We help businesses grow online through web development, mobile apps, AI automation, digital branding, and marketing strategies.",
+    url: "https://deepwelldigital.vercel.app/",
+    siteName: "DeepWell Digital",
+    type: "website",
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DeepWell Digital - Digital Agency",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "DeepWell Digital | Dig Deeper. Build Better.",
+    description:
+      "We build websites, mobile apps, and intelligent digital solutions that help businesses grow.",
+    images: ["/og-image.png"],
+  },
+};
 
 export default function Home() {
   return (
