@@ -102,8 +102,8 @@ export const metadata: Metadata = {
         images: [
             {
                 url: OG_IMAGE,
-                width: 1200,
-                height: 630,
+                width: 1060,
+                height: 420,
                 alt: "DeepWell Digital - Digital Agency",
             },
         ],
