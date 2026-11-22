@@ -4,6 +4,7 @@ import { Manrope, Inter } from "next/font/google";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollEffects from "@/components/layout/ScrollEffects";
 
 import "./globals.css";
 
@@ -197,6 +198,7 @@ export default function RootLayout({
 
                 <ThemeProvider>
                     <Navbar />
+                    <ScrollEffects />
 
                     {/* Page Content */}
                     <div className="flex-1">

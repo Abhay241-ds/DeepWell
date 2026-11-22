@@ -8,20 +8,23 @@ import {
   MoveUpRight,
   CircleDot,
 } from "lucide-react";
+
 import Services from "@/components/services/Services";
 import type { Metadata } from "next";
 import Process from "@/components/home/Process";
 import BottomCTA from "@/components/layout/BottomCTA";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import FAQ from "@/components/home/FAQ";
+
 const capabilities = [
   { label: "Digital experiences", icon: Layers3 },
   { label: "Modern development", icon: Code2 },
   { label: "Intelligent solutions", icon: Sparkles },
 ];
+
 export const metadata: Metadata = {
   title: "Digital Agency for Web, Apps & AI Solutions",
-  
+
   description:
     "DeepWell Digital helps businesses grow online with professional website development, mobile apps, social media management, AI automation, digital branding, and marketing solutions.",
 
@@ -72,16 +75,23 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="flex-1 overflow-hidden">
+
       {/* Hero Section */}
-      <section className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14">        {/* Background Accent */}
+      <section
+        data-scroll-reveal
+        className="relative isolate overflow-hidden bg-(--background) px-4 pb-10 pt-10 transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-10 before:h-10 before:bg-linear-to-b before:from-(--section-shadow) before:to-transparent sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pb-14 lg:pt-14"
+      >
+        {/* Background Accent */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-32 top-10 h-72 w-72 rounded-full bg-[var(--accent)]/10 blur-3xl sm:h-96 sm:w-96"
         />
 
         <div className="relative grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+
           {/* Left Content */}
           <div>
+
             {/* Agency Badge */}
             <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2.5">
               <span className="relative flex h-2.5 w-2.5">
@@ -106,15 +116,18 @@ export default function Home() {
 
             {/* Description */}
             <h3 className="mt-8 max-w-xl text-base leading-8 text-[var(--muted)] sm:text-lg sm:leading-9">
-              <p className="text-[var(--highlight)] text-2xl">We help your business grow online.</p>
+              <p className="text-2xl text-[var(--highlight)]">
+                We help your business grow online.
+              </p>
 
-              We build websites, create mobile apps, manage social media, and use AI to make your work easier. Everything you need to grow your business, all in one place.
-
-
+              We build websites, create mobile apps, manage social media, and
+              use AI to make your work easier. Everything you need to grow
+              your business, all in one place.
             </h3>
 
             {/* CTA Buttons */}
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+
               <Link
                 href="/contact"
                 className="group inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--primary)] px-7 py-4 text-sm font-bold text-[var(--background)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--highlight)]/10"
@@ -138,12 +151,16 @@ export default function Home() {
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 />
               </Link>
+
             </div>
 
             {/* Capabilities */}
             <div className="mt-6 hidden flex-wrap items-center gap-x-6 gap-y-4 border-t border-[var(--border)] pt-4 lg:flex">
               {capabilities.map(({ label, icon: Icon }) => (
-                <div key={label} className="flex items-center gap-2.5">
+                <div
+                  key={label}
+                  className="flex items-center gap-2.5"
+                >
                   <Icon
                     size={17}
                     strokeWidth={1.8}
@@ -156,14 +173,18 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
           </div>
 
           {/* Right Visual */}
           <div className="relative mx-auto w-full max-w-lg sm:block lg:max-w-none">
+
             {/* Main Visual Card */}
             <div className="relative rounded-[1.8rem] border border-[var(--border)] bg-[var(--card)] p-3 shadow-2xl shadow-black/5 transition-colors duration-300 sm:rounded-[2.2rem] sm:p-4">
+
               {/* Main Design Panel */}
               <div className="relative isolate flex min-h-[430px] flex-col justify-between overflow-hidden rounded-[1.4rem] border border-[var(--border)] bg-[var(--background)] p-6 text-[var(--foreground)] transition-colors duration-300 sm:min-h-[480px] sm:rounded-[1.8rem] sm:p-8">
+
                 {/* Decorative Grid */}
                 <div
                   aria-hidden="true"
@@ -249,6 +270,7 @@ export default function Home() {
                     THINK / CREATE / BUILD
                   </span>
                 </div>
+
               </div>
 
               {/* Browser Footer */}
@@ -265,6 +287,7 @@ export default function Home() {
                   DESIGN / DEVELOP / GROW
                 </span>
               </div>
+
             </div>
 
             {/* Floating Accent Card */}
@@ -294,20 +317,37 @@ export default function Home() {
                 BUILT FOR WHAT&apos;S NEXT
               </span>
             </div>
+
           </div>
         </div>
 
         {/* Scroll Indicator */}
-
       </section>
 
+      {/* Services Section */}
+      <div data-scroll-reveal>
+        <Services />
+      </div>
 
-      <Services />
-      <Process />
-      <WhyChooseUs />
-      <FAQ />
-      <BottomCTA />
+      {/* Process Section */}
+      <div data-scroll-reveal>
+        <Process />
+      </div>
 
+      {/* Why Choose Us Section */}
+      <div data-scroll-reveal>
+        <WhyChooseUs />
+      </div>
+
+      {/* FAQ Section */}
+      <div data-scroll-reveal>
+        <FAQ />
+      </div>
+
+      {/* Bottom CTA Section */}
+      <div data-scroll-reveal>
+        <BottomCTA />
+      </div>
 
     </main>
   );

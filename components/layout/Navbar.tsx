@@ -1,9 +1,8 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
@@ -17,9 +16,49 @@ const navLinks = [
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [scrollProgress, setScrollProgress] = useState(0);
+
     const pathname = usePathname();
 
-    // Check which page is currently active
+    // Scroll Progress
+    useEffect(() => {
+        let animationFrame = 0;
+
+        const updateProgress = () => {
+            cancelAnimationFrame(animationFrame);
+
+            animationFrame = requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
+
+                const scrollableHeight =
+                    document.documentElement.scrollHeight -
+                    window.innerHeight;
+
+                const progress =
+                    scrollableHeight > 0
+                        ? (scrollTop / scrollableHeight) * 100
+                        : 0;
+
+                setScrollProgress(Math.min(100, Math.max(0, progress)));
+            });
+        };
+
+        updateProgress();
+
+        window.addEventListener("scroll", updateProgress, {
+            passive: true,
+        });
+
+        window.addEventListener("resize", updateProgress);
+
+        return () => {
+            cancelAnimationFrame(animationFrame);
+            window.removeEventListener("scroll", updateProgress);
+            window.removeEventListener("resize", updateProgress);
+        };
+    }, [pathname]);
+
+    // Check active page
     const isActivePage = (href: string) => {
         if (href === "/") {
             return pathname === "/";
@@ -30,6 +69,20 @@ export default function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--background)]/95 shadow-[0_2px_10px_rgba(0,0,0,0.1)] backdrop-blur-md transition-colors duration-300">
+
+            {/* Scroll Progress Bar */}
+            <div
+                className="absolute left-0 top-0 z-60 h-1 bg-[var(--highlight)]"
+                style={{
+                    width: `${scrollProgress}%`,
+                    transition: "width 100ms linear",
+                }}
+                role="progressbar"
+                aria-label="Page scroll progress"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(scrollProgress)}
+            />
 
             {/* Navbar */}
             <nav
@@ -56,7 +109,7 @@ export default function Navbar() {
                                 key={link.href}
                                 href={link.href}
                                 aria-current={isActive ? "page" : undefined}
-                                className={`relative py-2 text-sm font-medium transition-colors duration-200 ${
+                                className={`relative font-bold text-sm transition-colors duration-200 ${
                                     isActive
                                         ? "text-[var(--highlight)]"
                                         : "text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -64,7 +117,6 @@ export default function Navbar() {
                             >
                                 {link.label}
 
-                                {/* Active page indicator */}
                                 {isActive && (
                                     <span className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-[var(--highlight)]" />
                                 )}
@@ -135,7 +187,6 @@ export default function Navbar() {
                                 >
                                     <span>{link.label}</span>
 
-                                    {/* Active page dot */}
                                     {isActive && (
                                         <span className="h-2 w-2 rounded-full bg-[var(--highlight)]" />
                                     )}
